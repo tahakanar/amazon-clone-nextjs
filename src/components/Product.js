@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
 import { HeartIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
@@ -11,7 +12,7 @@ const MIN_RATING = 1;
 
 function Product({ id, category, description, image, price, title }) {
   const dispatch = useDispatch();
-
+  const [fav, setFav] = useState(false);
   const [rating] = useState(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
@@ -44,7 +45,7 @@ function Product({ id, category, description, image, price, title }) {
       rating,
       hasPrime,
     };
-
+    setFav(!fav);
     dispatch(addToFav(favs));
   };
 
@@ -69,10 +70,17 @@ function Product({ id, category, description, image, price, title }) {
               <StarIcon className='h-5 text-yellow-500' />
             ))}
         </div>
-        <HeartIcon
-          onClick={addItemToFavorite}
-          className='h-5 text-yellow-500 cursor-pointer'
-        />
+        {fav ? (
+          <BadgeCheckIcon
+            className='h-5 text-yellow-500 cursor-pointer'
+            onClick={addItemToFavorite}
+          />
+        ) : (
+          <HeartIcon
+            onClick={addItemToFavorite}
+            className='h-5 text-yellow-500 cursor-pointer'
+          />
+        )}
       </div>
       <p className='text-xs my-2 line-clamp-2'>{description}</p>
       <div className='mb-5'>

@@ -3,16 +3,19 @@ import {
   MenuIcon,
   SearchIcon,
   ShoppingCartIcon,
+  HeartIcon,
 } from "@heroicons/react/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectItems } from "../slices/basketSlice";
+import { selectFavs } from "../slices/favSlice";
 
 function Header() {
   const { data: session } = useSession();
   const router = useRouter();
   const items = useSelector(selectItems);
+  const datas = useSelector(selectFavs);
 
   return (
     <header>
@@ -47,6 +50,12 @@ function Header() {
           <div className='link'>
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>
+          </div>
+          <div
+            onClick={() => router.push("/favorites")}
+            className=' relative flex items-center link'
+          >
+            <HeartIcon className='h-10' />
           </div>
           <div
             onClick={() => router.push("/checkout")}
