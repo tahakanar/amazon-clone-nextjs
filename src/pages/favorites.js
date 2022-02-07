@@ -28,21 +28,21 @@ function Favorites() {
                 ? "Your Favorites are Empty"
                 : "Your Favorites"}
             </h1>
-          </div>
-          <div className='grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-            {datas.map((item, i) => (
-              <FavoriteProduct
-                key={i}
-                id={item.id}
-                rating={item.rating}
-                hasPrime={item.hasPrime}
-                category={item.category}
-                description={item.description}
-                image={item.image}
-                price={item.price}
-                title={item.title}
-              />
-            ))}
+            <div className='grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+              {datas.map((item, i) => (
+                <FavoriteProduct
+                  key={i}
+                  id={item.id}
+                  rating={item.rating}
+                  hasPrime={item.hasPrime}
+                  category={item.category}
+                  description={item.description}
+                  image={item.image}
+                  price={item.price}
+                  title={item.title}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </main>
