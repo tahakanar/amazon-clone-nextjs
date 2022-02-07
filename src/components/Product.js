@@ -1,16 +1,52 @@
 import Image from "next/image";
 import { StarIcon } from "@heroicons/react/solid";
+import { HeartIcon } from "@heroicons/react/outline";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToBasket } from "../slices/basketSlice";
+import { addToFav } from "../slices/favSlice";
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
 
 function Product({ id, category, description, image, price, title }) {
+  const dispatch = useDispatch();
+
   const [rating] = useState(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
 
   const [hasPrime] = useState(Math.random() < 0.5);
+
+  const addItemToBasket = () => {
+    const product = {
+      id,
+      category,
+      description,
+      image,
+      price,
+      title,
+      rating,
+      hasPrime,
+    };
+
+    dispatch(addToBasket(product));
+  };
+
+  const addItemToFavorite = () => {
+    const favs = {
+      id,
+      category,
+      description,
+      image,
+      price,
+      title,
+      rating,
+      hasPrime,
+    };
+
+    dispatch(addToFav(favs));
+  };
 
   return (
     <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
@@ -26,11 +62,17 @@ function Product({ id, category, description, image, price, title }) {
       />
       <h4 className='my-3'>{title}</h4>
       <div className='flex'>
-        {Array(rating)
-          .fill()
-          .map((_, i) => (
-            <StarIcon className='h-5 text-yellow-500' />
-          ))}
+        <div className='flex flex-grow'>
+          {Array(rating)
+            .fill()
+            .map((_, i) => (
+              <StarIcon className='h-5 text-yellow-500' />
+            ))}
+        </div>
+        <HeartIcon
+          onClick={addItemToFavorite}
+          className='h-5 text-yellow-500 cursor-pointer'
+        />
       </div>
       <p className='text-xs my-2 line-clamp-2'>{description}</p>
       <div className='mb-5'>
@@ -46,7 +88,9 @@ function Product({ id, category, description, image, price, title }) {
           <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
         </div>
       )}
-      <button className='mt-auto button'>Add To Basket</button>
+      <button onClick={addItemToBasket} className='mt-auto button'>
+        Add To Basket
+      </button>
     </div>
   );
 }
