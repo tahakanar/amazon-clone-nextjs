@@ -11,7 +11,8 @@ const stripePromise = loadStripe(`process.env.stripe_public_key`);
 
 function Checkout() {
   const items = useSelector(selectItems);
-  const total = useSelector(selectTotal);
+  const cartQuantity = useSelector((state) => state.basket.totalQuantity);
+  const totalPrice = useSelector((state) => state.basket.totalPrice);
   const { data: session } = useSession();
 
   const createCheckoutSession = async () => {
@@ -57,6 +58,7 @@ function Checkout() {
                   image={item.image}
                   price={item.price}
                   title={item.title}
+                  quantity={item.quantity}
                 />
               ))}
             </div>
@@ -66,8 +68,8 @@ function Checkout() {
           {items.length > 0 && (
             <>
               <h2 className='whitespace-nowrap'>
-                Subtotal ({items.length} items):
-                <span className='font-bold'>€{total}</span>
+                Subtotal ({cartQuantity} items):
+                <span className='font-bold'>€{totalPrice.toFixed(2)}</span>
               </h2>
               <button
                 role='link'
