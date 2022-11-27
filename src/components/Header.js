@@ -9,6 +9,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectFavs } from "../slices/favSlice";
+import { motion } from "framer-motion";
 
 function Header() {
   const { data: session } = useSession();
@@ -70,7 +71,12 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className='flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white'>
+      <motion.div
+        initial={{ y: 25, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className='flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white'
+      >
         <p className='link flex items-center'>
           <MenuIcon className='h-6 mr-1' />
           All
@@ -84,7 +90,7 @@ function Header() {
         <p className='link hidden lg:inline-flex'>Buy Again</p>
         <p className='link hidden lg:inline-flex'>Shopper Toolkit</p>
         <p className='link hidden lg:inline-flex'>Health & Personal Care</p>
-      </div>
+      </motion.div>
     </header>
   );
 }

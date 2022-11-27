@@ -1,9 +1,15 @@
 import React from "react";
 import Product from "./Product";
+import { motion } from "framer-motion";
 
 function ProductFeed({ products }) {
   return (
-    <div className='grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 -mt-20 md:-mt-52'>
+    <motion.div
+      initial={{ y: 25, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
+      className='grid grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 -mt-20 md:-mt-52'
+    >
       {products
         .slice(0, 4)
         .map(({ id, category, description, image, price, rating, title }) => (
@@ -54,7 +60,7 @@ function ProductFeed({ products }) {
             rating={rating}
           />
         ))}
-    </div>
+    </motion.div>
   );
 }
 

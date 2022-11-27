@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToBasket } from "../slices/basketSlice";
 import { addToFav } from "../slices/favSlice";
+import { motion } from "framer-motion";
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
@@ -50,7 +51,13 @@ function Product({ id, category, description, image, price, title }) {
   };
 
   return (
-    <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
+    <motion.div
+      whileHover={{ scale: 1.2 }}
+      whileTap={{ scale: 1.1 }}
+      drag='x'
+      dragConstraints={{ left: -100, right: 100 }}
+      className='relative flex flex-col m-5 bg-white z-30 p-10'
+    >
       <p className='absolute top-2 right-2 text-xs italic text-gray-400'>
         {category}
       </p>
@@ -96,10 +103,17 @@ function Product({ id, category, description, image, price, title }) {
           <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>
         </div>
       )}
-      <button onClick={addItemToBasket} className='mt-auto button'>
+      <motion.button
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 1.1 }}
+        drag='x'
+        dragConstraints={{ left: -100, right: 100 }}
+        onClick={addItemToBasket}
+        className='mt-auto button'
+      >
         Add To Basket
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }
 
